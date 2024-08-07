@@ -1,3 +1,10 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +42,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+.icon{
+  color: #fff;
+
+  
 }
