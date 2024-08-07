@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BagIcon,
   BarsIcon,
@@ -11,9 +11,22 @@ import {
 
 function SideNavBarComponent() {
   let [ActiveBar, SetActiveBar] = useState(0);
+  let [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   function HandleClick(index) {
     SetActiveBar(index);
   }
+
   const config = [
     HomeIcon,
     BarsIcon,
@@ -22,46 +35,52 @@ function SideNavBarComponent() {
     BagIcon,
     LogoutIcon,
   ];
+
   return (
     <div
       style={{
         display: "flex",
-        width: "5rem",
+        width: isMobile ? "100vw" : "5rem",
         backgroundColor: "#222831",
-        height: "100vh",
-        position: "fixed",
-        top: 0,
-        left: 0,
+        height: isMobile ? "auto" : "100vh",
+        position: isMobile ? "fixed" : "fixed",
+        top: isMobile ? "auto" : 0,
         bottom: 0,
-        paddingTop: "6rem",
-        flexDirection: "column",
-        justifyContent: "space-between",
+        left: isMobile ? 0 : "auto",
+        right: isMobile ? 0 : "auto",
+        paddingTop: isMobile ? "0" : "6rem",
+        flexDirection: isMobile ? "row" : "column",
+        justifyContent: isMobile ? "space-around" : "space-between",
         alignItems: "center",
+        zIndex: 1000,
       }}
     >
       {config.map((icon, i) => (
-        <SideBarbutton
-          onClick={() => SetActiveBar(i)}
-          active={i == ActiveBar}
+        <SideBarButton
+          key={i}
+          onClick={() => HandleClick(i)}
+          active={i === ActiveBar}
           icon={icon}
+          isMobile={isMobile}
         />
       ))}
     </div>
   );
 }
 
-function SideBarbutton({ active, icon, onClick }) {
+function SideBarButton({ active, icon, onClick, isMobile }) {
   return (
     <div
       style={{
         padding: "4px",
-        width: "4rem",
+        width: isMobile ? "auto" : "4rem",
         height: "4rem",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: "16px",
-        borderLeft: active && "4px solid #82acff",
+        marginBottom: isMobile ? "0" : "16px",
+        borderLeft: !isMobile && active && "4px solid #82acff",
+        borderBottom: isMobile && active && "4px solid #82acff",
       }}
       onClick={() => onClick()}
     >
@@ -71,4 +90,5 @@ function SideBarbutton({ active, icon, onClick }) {
     </div>
   );
 }
+
 export default SideNavBarComponent;

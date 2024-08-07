@@ -53,7 +53,7 @@ const CustomerFeedback = () => {
         marginTop:"6px",
         maxHeight:"23rem",
         overflow:'auto',
-        width:'90%',
+       
       }}
     >
       <h4>Customer's Feedback</h4>

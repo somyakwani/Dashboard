@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -46,17 +46,30 @@ const statistics = [
 ];
 
 const StatisticsCards = () => {
+  let [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
-    <Row>
+
+    <Row >
       {statistics.map((stat, index) => (
-        <Col style={{height:'100%'}} key={index} sm={6} md={3}>
+        <Col key={index} sm={6} md={3} xs={6}>
           <Card
             style={{
               backgroundColor: "#222831",
               color: "white",
               borderRadius: "10px",
               padding: "5px",
-              height:"12rem"
+              height:"12rem",
+              margin:isMobile?"4px":0
+
             }}
           >
             <div className="d-flex flex-column justify-content-between">

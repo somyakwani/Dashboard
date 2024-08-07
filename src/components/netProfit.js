@@ -15,7 +15,7 @@ const NetProfit = () => {
         color: "white",
         padding: "20px",
         borderRadius: "10px",
-        width: "90%",
+       
       }}
     >
       <Row>

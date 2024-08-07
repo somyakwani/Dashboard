@@ -10,8 +10,19 @@ import ActivityChart from "./components/activityChart";
 import MenuList from "./components/menuList";
 import NetProfit from "./components/netProfit";
 import StatisticsCards from "./components/stats";
+import { useState,useEffect } from "react";
 
 function App() {
+  let [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   let cards = [
     { label: "Total Order", value: 75, icon: DeliveryIcon },
     { label: "Total Delivered", value: 70, icon: BagIcon },
@@ -26,12 +37,15 @@ function App() {
 
   return (
     <Layout>
-      <div
+      <div 
         style={{
-          paddingTop: "3rem",
-          paddingLeft: "6rem",
-          border: "1px solid black",
+          paddingTop:isMobile?"1rem": "3rem",
+          paddingLeft:isMobile?"1rem": "6rem",
+          // border: "1px solid black",
           backgroundColor: "black",
+          width:"100%",
+          overflow:"hidden",
+          paddingRight:isMobile?"1rem":"3rem",
         }}
       >
         <div
@@ -41,19 +55,19 @@ function App() {
         </div>
 
         <Row >
-          <Col>
+          <Col md={6} lg={6} sm={12}>
             <StatisticsCards></StatisticsCards>
           </Col>
 
           {/* right grid */}
-          <Col>
+          <Col md={6} lg={6} sm={12}>
            
            <NetProfit></NetProfit>
            
           </Col>
         </Row>
         <Row style={{marginTop:'10px'}} >
-          <Col >
+          <Col md={6} lg={6} sm={12} >
           <ActivityChart></ActivityChart></Col>
           <Col >
            
@@ -62,10 +76,10 @@ function App() {
           </Col>
         </Row>
         <Row style={{marginTop:'10px'}}>
-          <Col>
+          <Col md={6} lg={6} sm={12}>
             <RecentOrders></RecentOrders>
           </Col>
-          <Col>
+          <Col md={6} lg={6} sm={12}>
           <CustomerFeedback>
 
           </CustomerFeedback>

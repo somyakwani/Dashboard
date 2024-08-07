@@ -26,7 +26,7 @@ const MenuList = () => {
         color: "white",
         padding: "20px",
         borderRadius: "10px",
-        width: "90%",
+      
       }}
     >
       <ListGroup variant="flush">
